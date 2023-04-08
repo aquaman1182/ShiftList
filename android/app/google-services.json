@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "414783311680",
+    "project_id": "shiftlist-d0c57",
+    "storage_bucket": "shiftlist-d0c57.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414783311680:android:578b50a0ccbbaa3ce8b4a5",
+        "android_client_info": {
+          "package_name": "com.example.shift_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414783311680-btdhg4621diut6iisok7ruk5jf57jujd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBulynCbQv0mStQ1vF_0tR3APuwEK2kgh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414783311680-btdhg4621diut6iisok7ruk5jf57jujd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414783311680-oc2dovf6sl4t9iig36fhlthb40s7eei1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shiftlist"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414783311680:android:76802fd255866620e8b4a5",
+        "android_client_info": {
+          "package_name": "com.example.shiftlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414783311680-btdhg4621diut6iisok7ruk5jf57jujd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBulynCbQv0mStQ1vF_0tR3APuwEK2kgh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414783311680-btdhg4621diut6iisok7ruk5jf57jujd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414783311680-oc2dovf6sl4t9iig36fhlthb40s7eei1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shiftlist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
