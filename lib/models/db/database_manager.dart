@@ -19,18 +19,4 @@ class DatabaseManager {
       }
     }
   }
-
-  // Future<User?> signInWithEmailAndPassword(
-  //   String email, String password) async {
-  //     try {
-  //       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-  //         email: email.trim(),
-  //         password: password.trim(),
-  //       );
-  //       return userCredential;
-  //     } on FirebaseAuthException catch (e) {
-  //       print(e.code);
-  //       return null;
-  //     }
-  //   }
 }

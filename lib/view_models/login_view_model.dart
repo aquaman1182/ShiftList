@@ -5,4 +5,6 @@ class LoginViewModel extends ChangeNotifier{
   final LoginRepository loginRepository;
   LoginViewModel({required LoginRepository loginRepository})
   :loginRepository = loginRepository;
+
+  
 }
