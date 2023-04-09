@@ -74,7 +74,7 @@ class RegisterPage extends StatelessWidget {
                 onPressed: () async{
                   registerViewModel.startLoading();
                   try {
-                    await registerViewModel.signIn(emailController.text, passController.text);
+                    await registerViewModel.signUp(emailController.text, passController.text);
                     context.go("/");
                   } catch (e) {
                     final snackBar = SnackBar(
@@ -82,6 +82,8 @@ class RegisterPage extends StatelessWidget {
                       content: Text(e.toString()),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } finally {
+                    registerViewModel.endLoading();
                   }
                 }, 
                 child: const Text("新規登録"),
