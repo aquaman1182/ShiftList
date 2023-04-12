@@ -1,12 +1,13 @@
+import 'package:shift_app/data_models/user_data/user.dart';
 import 'package:shift_app/models/db/database_manager.dart';
 
 class LoginRepository {
-  String? email;
-  String? password;
-  final DatabaseManager _databaseManager;
+  final DatabaseManager databaseManager;
 
   LoginRepository({required DatabaseManager databaseManager})
-  :_databaseManager = databaseManager;
+      : databaseManager = databaseManager;
 
-  Future<void> login() async{}
+  Future<String?> login(UserClassData user, String password) async {
+    return await databaseManager.login(user, password);
+  }
 }

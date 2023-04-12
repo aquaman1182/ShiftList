@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:shift_app/view_models/login_view_model.dart';
 
 class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LoginViewModel loginViewModel = context.read();
     final emailController = TextEditingController();
     final passController = TextEditingController();
 
@@ -61,12 +64,26 @@ class LoginPage extends StatelessWidget {
                 height: 16,
               ),
               ElevatedButton(
-                //TODO ログインできたらシフト表へ遷移させる
-                onPressed: () {},
+                onPressed: () async{
+                  loginViewModel.startLoading();
+                  try {
+                    await loginViewModel.login(
+                      emailController.text, passController.text);
+                      GoRouter.of(context).go('/shift_list');
+                  } catch (e) {
+                      final snackBar = SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(e.toString()),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } finally {
+                      loginViewModel.endLoading();
+                  }
+
+                },
                 child: const Text("ログイン")
               ),
               ElevatedButton(
-                //TODO 新規登録画面へ遷移
                 onPressed: () {
                   context.go("/register");
                 }, 
