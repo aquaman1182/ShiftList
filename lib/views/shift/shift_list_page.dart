@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shift_app/view_models/shift_view_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShiftPage extends StatelessWidget {
-
-  final DateTime _focusedDay = DateTime.now(); 
-  final CalendarFormat _calendarFormat = CalendarFormat.month; 
-
-  final sampleEvents = {
-    DateTime.utc(2023, 2, 20): ['firstEvent', 'secondEvent'],
-    DateTime.utc(2023, 2, 5): ['thirdEvent', 'fourthEvent']
-  };
-
   @override
   Widget build(BuildContext context) {
+    final _focusedDay = DateTime.now();
+    final _calendarFormat = CalendarFormat.month;
+    final shiftViewModel = context.watch<ShiftViewModel>();
     final _selectedDay = ValueNotifier<DateTime?>(null);
     final _selectedEvents = ValueNotifier<List<String>>([]);
 
@@ -20,13 +16,14 @@ class ShiftPage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(40.0),
             child: TableCalendar(
               firstDay: DateTime.utc(2023, 1, 1),
               lastDay: DateTime.utc(2024, 12, 31),
               focusedDay: _focusedDay,
+              locale: 'ja_JP',
               eventLoader: (date) {
-                return sampleEvents[date] ?? [];
+                return shiftViewModel.shiftEvents[date] ?? [];
               },
               calendarFormat: _calendarFormat,
               onFormatChanged: (format) {},
@@ -35,7 +32,7 @@ class ShiftPage extends StatelessWidget {
               },
               onDaySelected: (selectedDay, focusedDay) {
                 _selectedDay.value = selectedDay;
-                _selectedEvents.value = sampleEvents[selectedDay] ?? [];
+                _selectedEvents.value = shiftViewModel.shiftEvents[selectedDay] ?? [];
               },
             ),
           ),

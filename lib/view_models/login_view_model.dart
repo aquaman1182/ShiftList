@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shift_app/data_models/user_data/user.dart';
 import 'package:shift_app/models/repositories/login_repository.dart';
 
-class LoginViewModel extends ChangeNotifier {
-  final LoginRepository loginRepository;
+class AuthViewModel extends ChangeNotifier {
+  final AuthService _authService;
 
-  LoginViewModel({required LoginRepository loginRepository})
-      : loginRepository = loginRepository;
+  AuthViewModel({required AuthService authService})
+      : _authService = authService;
 
   bool isLoading = false;
 
@@ -20,16 +19,27 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> login(String email, String password) async {
+  Future<String?> signIn(String email, String password) async {
     startLoading();
     try {
-      final user = UserClassData(email: email, name: '', uid: '');
-      await loginRepository.login(user, password);
+      await _authService.signIn(email, password);
       endLoading();
       return null; // 認証成功時は null を返す
     } catch (e) {
       endLoading();
       return e.toString(); // エラーが発生した場合はエラーメッセージを返す
+    }
+  }
+
+  Future<String?> signUp(String email, String pass) async {
+    startLoading();
+    try {
+      await _authService.signUp(email, pass);
+      return null;
+    } catch (e) {
+      return e.toString();
+    } finally {
+      endLoading();
     }
   }
 }

@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shift_app/views/auth/login_page.dart';
-import 'package:shift_app/views/auth/register_page.dart';
+import 'package:shift_app/views/auth/sign_up_screen.dart';
 import 'package:shift_app/views/shift/shift_list_page.dart';
+
 
 GoRouter createGoRouter() {
   return GoRouter(
     routes: [
       GoRoute(
-        path: "/",
-        pageBuilder: (context, state) => 
-          MaterialPage(
-            key: state.pageKey,
-            child: LoginPage()
-          ), 
+        path: '/',
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            MaterialPage(
+          key: state.pageKey,
+          child: LoginScreen(),
+        ),
       ),
       GoRoute(
-        path: "/register",
-        pageBuilder: (context, state) => 
-          MaterialPage(
-            key: state.pageKey,
-            child: RegisterPage()
-          ),
+        path: '/signup',
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            MaterialPage(
+          key: state.pageKey,
+          child: SignUpScreen(),
+        ),
       ),
       GoRoute(
-        path: "/shift_list",
-        pageBuilder: (context, state) => 
-          MaterialPage(
-            key: state.pageKey,
-            child: ShiftPage()
-          ),
-      )
-    ]
+        path: '/shift_page',
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            MaterialPage(
+          key: state.pageKey,
+          child: ShiftPage(),
+        ),
+      ),
+    ],
   );
 }
