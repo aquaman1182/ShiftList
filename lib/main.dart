@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:shift_app/firebase_options.dart';
 import 'package:shift_app/router/router.dart';
@@ -13,12 +14,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final goRouter = createGoRouter(); // 追加: goRouterを作成
-  runApp(
+
+  initializeDateFormatting('ja').then((_) =>  runApp(
     MultiProvider(
       providers: globalProviders,
       child: MyApp(goRouter: goRouter),
     ),
-  );
+  )); 
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'シフト表',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.red,
       ),
       //下記を追加すると動いた
       routeInformationProvider: goRouter.routeInformationProvider,

@@ -27,7 +27,7 @@ class DatabaseManager {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> logout() async {
     await _auth.signOut();
   }
 }

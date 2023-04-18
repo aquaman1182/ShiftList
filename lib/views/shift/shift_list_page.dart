@@ -1,55 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shift_app/view_models/shift_view_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShiftPage extends StatelessWidget {
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
+
   @override
   Widget build(BuildContext context) {
-    final _focusedDay = DateTime.now();
-    final _calendarFormat = CalendarFormat.month;
     final shiftViewModel = context.watch<ShiftViewModel>();
-    final _selectedDay = ValueNotifier<DateTime?>(null);
-    final _selectedEvents = ValueNotifier<List<String>>([]);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("シフト表"),
+        actions: [
+          Builder(
+            builder: (innerContext) => IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await shiftViewModel.logout();
+                context.go('/');
+              },
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.all(20.0),
             child: TableCalendar(
+              locale: 'ja_JP',
               firstDay: DateTime.utc(2023, 1, 1),
               lastDay: DateTime.utc(2024, 12, 31),
-              focusedDay: _focusedDay,
-              locale: 'ja_JP',
+              focusedDay: shiftViewModel.focusedDay,
               eventLoader: (date) {
-                return shiftViewModel.shiftEvents[date] ?? [];
+                return shiftViewModel.shiftRepository.shiftEvents[date] ?? [];
+              },
+              onPageChanged: (focusedDay) {
+                shiftViewModel.updateFocusedDay(focusedDay);
               },
               calendarFormat: _calendarFormat,
               onFormatChanged: (format) {},
               selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay.value, day);
+                return isSameDay(shiftViewModel.selectedDay, day);
               },
               onDaySelected: (selectedDay, focusedDay) {
-                _selectedDay.value = selectedDay;
-                _selectedEvents.value = shiftViewModel.shiftEvents[selectedDay] ?? [];
+                shiftViewModel.updateSelectedDay(selectedDay);
               },
             ),
           ),
           Expanded(
-            child: ValueListenableBuilder<List<String>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, child) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    final event = value[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(event),
-                      ),
-                    );
-                  },
+            child: ListView.builder(
+              itemCount: shiftViewModel.selectedEvents.length,
+              itemBuilder: (context, index) {
+                final event = shiftViewModel.selectedEvents[index];
+                return Card(
+                  child: ListTile(
+                    title: Text(event),
+                  ),
                 );
               },
             ),

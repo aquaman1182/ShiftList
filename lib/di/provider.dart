@@ -24,7 +24,9 @@ List<SingleChildWidget> dependentModels = [
   ProxyProvider<DatabaseManager, AuthService>(
     update: (_, dbManager, repo) => AuthService(databaseManager: dbManager),
   ),
-  ProxyProvider<DatabaseManager, ShiftRepository>(update: (_, dbManager, repo) => ShiftRepository())
+  ProxyProvider<DatabaseManager, ShiftRepository>(
+    update: (_, dbManager, repo) => ShiftRepository(databaseManager: dbManager),
+  )
 ];
 
 List<SingleChildWidget> viewModels = [
@@ -36,7 +38,7 @@ List<SingleChildWidget> viewModels = [
 
   ChangeNotifierProvider<ShiftViewModel>(
     create: (context) => ShiftViewModel(
-      shiftRepository: context.read<ShiftRepository>()
+      shiftRepository: context.read<ShiftRepository>(),
     ),
   ),
 ];

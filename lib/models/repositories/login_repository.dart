@@ -15,6 +15,6 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await databaseManager.signOut();
+    await databaseManager.logout();
   }
 }
