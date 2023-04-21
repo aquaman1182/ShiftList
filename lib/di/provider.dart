@@ -3,6 +3,7 @@ import 'package:shift_app/models/db/database_manager.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shift_app/models/repositories/login_repository.dart';
 import 'package:shift_app/models/repositories/shift_repository.dart';
+import 'package:shift_app/view_models/bottom_navigation_view_model.dart';
 import 'package:shift_app/view_models/login_view_model.dart';
 import 'package:shift_app/view_models/shift_view_model.dart';
 
@@ -40,5 +41,8 @@ List<SingleChildWidget> viewModels = [
     create: (context) => ShiftViewModel(
       shiftRepository: context.read<ShiftRepository>(),
     ),
+  ),
+  ChangeNotifierProvider<BottomNavigationModel>(
+    create: (_) => BottomNavigationModel(),
   ),
 ];
