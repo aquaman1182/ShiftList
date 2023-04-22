@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shift_app/view_models/shift_view_model.dart';
-import 'package:shift_app/views/components/bottom_navigation_bar.dart';
-import 'package:shift_app/views/shift/shift_list_content.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShiftPage extends StatelessWidget {
@@ -11,7 +9,7 @@ class ShiftPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shiftViewModel = context.watch<ShiftViewModel>();
+    final ShiftViewModel shiftViewModel = context.watch();
 
     return Scaffold(
       appBar: AppBar(
@@ -107,6 +105,12 @@ class ShiftPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go('/shift_page/add');
+        },
+        child: const Icon(Icons.add),
+      )
     );
   }
 }
