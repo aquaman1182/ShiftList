@@ -14,6 +14,33 @@ class ShiftViewModel extends ChangeNotifier {
   List<String> get selectedEvents => _selectedEvents;
   DateTime get focusedDay => _focusedDay;
 
+  Set<DateTime> _selectedDays = <DateTime>{};
+
+  Set<DateTime> get selectedDays => _selectedDays;
+
+  void updateSelectedDays(DateTime selectedDay) {
+    if (_selectedDays.contains(selectedDay)) {
+      _selectedDays.remove(selectedDay);
+    } else {
+      _selectedDays.add(selectedDay);
+    }
+    notifyListeners();
+  }
+
+  void clearSelectedDays() {
+    _selectedDays.clear();
+    notifyListeners();
+  }
+
+  void toggleSelectedDay(DateTime day) {
+    if (_selectedDays.contains(day)) {
+      _selectedDays.remove(day);
+    } else {
+      _selectedDays.add(day);
+    }
+    notifyListeners();
+  }
+
   void updateFocusedDay(DateTime day) {
     _focusedDay = day;
     notifyListeners();

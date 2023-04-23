@@ -1,45 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shift_app/view_models/shift_view_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class ShiftAddPage extends StatelessWidget {
+class ShiftAddPage extends StatefulWidget {
+  @override
+  _ShiftAddPageState createState() => _ShiftAddPageState();
+}
+
+class _ShiftAddPageState extends State<ShiftAddPage> {
   final CalendarFormat _calendarFormat = CalendarFormat.month;
+  final Set<DateTime> _selectedDays = <DateTime>{};
+
+  DateTime _nextMonthFirstDay() {
+    DateTime now = DateTime.now();
+    DateTime firstDayOfNextMonth =
+        DateTime(now.year, now.month + 1, 1);
+    return firstDayOfNextMonth;
+  }
 
   @override
   Widget build(BuildContext context) {
-final ShiftViewModel shiftViewModel = context.watch();
+    final ShiftViewModel shiftViewModel = context.watch();
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Shift追加"),
       ),
       body: Column(
-          children: [
-            TableCalendar(
-              //カレンダー日本語化
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TableCalendar(
               locale: 'ja_JP',
               firstDay: DateTime.utc(2023, 1, 1),
               lastDay: DateTime.utc(2024, 12, 31),
-              //カレンダーの日付をタップしたときに、その日付をfocusedDayにセットする
-              focusedDay: shiftViewModel.focusedDay,
-              //
+              focusedDay: _nextMonthFirstDay(),
               eventLoader: (date) {
                 return shiftViewModel.shiftRepository.shiftEvents[date] ?? [];
               },
-              //月を変えたときに、focusedDayを更新する
               onPageChanged: (focusedDay) {
                 shiftViewModel.updateFocusedDay(focusedDay);
               },
-              //カレンダーの表示形式
               calendarFormat: _calendarFormat,
               onFormatChanged: (format) {
                 //TODO カレンダーの表示形式を変えたときの処理
               },
-              //カレンダーの日付の装飾
               calendarBuilders: CalendarBuilders(
                 dowBuilder: (_, day) {
-                  if(day.weekday == DateTime.sunday) {
+                  if (day.weekday == DateTime.sunday) {
                     return Center(
                       child: Text(
                         "日",
@@ -47,10 +57,8 @@ final ShiftViewModel shiftViewModel = context.watch();
                       ),
                     );
                   }
-                  //問題なければnullを返す
                   return null;
                 },
-                //選択した日付の装飾
                 selectedBuilder: (context, date, events) => Container(
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
@@ -63,7 +71,6 @@ final ShiftViewModel shiftViewModel = context.watch();
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                //今日の日付の装飾
                 todayBuilder: (context, date, events) => Container(
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
@@ -77,8 +84,20 @@ final ShiftViewModel shiftViewModel = context.watch();
                   ),
                 ),
               ),
-            )
-          ]
+              selectedDayPredicate: (day) => _selectedDays.contains(day),
+              onDaySelected: (selectedDay, focusedDay) {
+                shiftViewModel.updateFocusedDay(focusedDay);
+                shiftViewModel.updateSelectedDays(selectedDay);
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.go("/shift/add/setting",extra: {'selectedDays': shiftViewModel.selectedDays},);
+            }, 
+            child: const Text('選択'),
+          )
+        ],
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:shift_app/views/components/bottom_navigation_bar.dart';
 import 'package:shift_app/views/master/master_page.dart';
 import 'package:shift_app/views/my_profile/my_page.dart';
 import 'package:shift_app/views/shift/shift_add_page.dart';
+import 'package:shift_app/views/shift/shift_setting_page.dart';
 
 GoRouter createGoRouter() {
   return GoRouter(
@@ -41,6 +42,19 @@ GoRouter createGoRouter() {
                   FadeTransitionPage(
                 child: ShiftAddPage(),
               ),
+              routes: [
+                GoRoute(
+                  path: 'setting',
+                  pageBuilder: (BuildContext context, GoRouterState state) {
+                    final selectedDays = 
+                      (state.extra as Map<String, dynamic>?)?['selectedDays'] as Set<DateTime>? ?? Set<DateTime>();
+                    return MaterialPage(
+                      key: state.pageKey,
+                      child: ShiftSettingPage(selectedDays: selectedDays),
+                    );
+                  },
+                ),
+              ]
             ),
           ]),
       GoRoute(
