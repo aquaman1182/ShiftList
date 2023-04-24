@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyProfilePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +11,10 @@ class MyProfilePage extends StatelessWidget {
       body: Column(
         children: [
           Center(
-            child: Text('マイページ'),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("マイページ", style: TextStyle(fontSize: 30),),
+            ),
           ),
         ],
       ),

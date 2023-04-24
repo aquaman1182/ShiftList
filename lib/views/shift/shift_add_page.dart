@@ -11,12 +11,10 @@ class ShiftAddPage extends StatefulWidget {
 
 class _ShiftAddPageState extends State<ShiftAddPage> {
   final CalendarFormat _calendarFormat = CalendarFormat.month;
-  final Set<DateTime> _selectedDays = <DateTime>{};
 
   DateTime _nextMonthFirstDay() {
     DateTime now = DateTime.now();
-    DateTime firstDayOfNextMonth =
-        DateTime(now.year, now.month + 1, 1);
+    DateTime firstDayOfNextMonth = DateTime(now.year, now.month + 1, 1);
     return firstDayOfNextMonth;
   }
 
@@ -84,17 +82,23 @@ class _ShiftAddPageState extends State<ShiftAddPage> {
                   ),
                 ),
               ),
-              selectedDayPredicate: (day) => _selectedDays.contains(day),
+              selectedDayPredicate: (day) => shiftViewModel.selectedDays.contains(day),
               onDaySelected: (selectedDay, focusedDay) {
-                shiftViewModel.updateFocusedDay(focusedDay);
-                shiftViewModel.updateSelectedDays(selectedDay);
+                setState(() {
+                  shiftViewModel.updateFocusedDay(focusedDay);
+                  if (shiftViewModel.selectedDays.contains(selectedDay)) {
+                    shiftViewModel.selectedDays.remove(selectedDay);
+                  } else {
+                    shiftViewModel.selectedDays.add(selectedDay);
+                  }
+                });
               },
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              context.go("/shift/add/setting",extra: {'selectedDays': shiftViewModel.selectedDays},);
-            }, 
+              context.go("/shift_page/add/setting", extra: {'selectedDays': shiftViewModel.selectedDays});
+            },
             child: const Text('選択'),
           )
         ],

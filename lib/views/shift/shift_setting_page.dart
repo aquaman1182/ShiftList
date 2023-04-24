@@ -20,8 +20,8 @@ class ShiftSettingPage extends StatelessWidget {
         itemBuilder: (context, index) {
           DateTime selectedDate = shiftViewModel.selectedDays.elementAt(index);
           return ListTile(
-            title: Text('${selectedDate.year}-${selectedDate.month}-${selectedDate.day}'),
-            // 時間を設定できるようにする部分は、ここに追加してください。
+            title: Text('${selectedDate.month}月${selectedDate.day}日'),
+            // 時間を設定できるようにする部分は、ここに追加
           );
         },
       ),

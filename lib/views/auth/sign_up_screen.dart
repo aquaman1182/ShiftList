@@ -12,14 +12,6 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (context) => IconButton(
-            onPressed: () {
-              context.go("/");
-            },
-            icon: const Icon(Icons.arrow_back),
-          ),
-        ),
         title: Text("新規登録"),
       ),
       body: Form(
