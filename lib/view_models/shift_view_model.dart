@@ -18,6 +18,18 @@ class ShiftViewModel extends ChangeNotifier {
 
   Set<DateTime> get selectedDays => _selectedDays;
 
+  Map<DateTime, TimeOfDay> _startTimes = {};
+  Map<DateTime, TimeOfDay> _endTimes = {};
+
+  TimeOfDay? getStartTime(DateTime date) => _startTimes[date];
+  TimeOfDay? getEndTime(DateTime date) => _endTimes[date];
+
+    void updateShift(DateTime date, String startTime, String endTime) {
+    // ここにシフトの更新処理を実装します。
+    // 例えば、shiftRepositoryを使用してデータを保存できます。
+    notifyListeners();
+  }
+
   void updateSelectedDays(DateTime selectedDay) {
     if (_selectedDays.contains(selectedDay)) {
       _selectedDays.remove(selectedDay);
@@ -49,6 +61,16 @@ class ShiftViewModel extends ChangeNotifier {
   void updateSelectedDay(DateTime? day) {
     _selectedDay = day;
     _selectedEvents = shiftRepository.shiftEvents[day] ?? [];
+    notifyListeners();
+  }
+
+  void updateStartTime(DateTime date, TimeOfDay time) {
+    _startTimes[date] = time;
+    notifyListeners();
+  }
+
+  void updateEndTime(DateTime date, TimeOfDay time) {
+    _endTimes[date] = time;
     notifyListeners();
   }
 
