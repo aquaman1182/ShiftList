@@ -9,6 +9,16 @@ class AuthViewModel extends ChangeNotifier {
 
   bool isLoading = false;
 
+  String? _errorMessage;
+
+  String? get errorMessage => _errorMessage;
+
+  void setErrorMessage(String? message) {
+    _errorMessage = message;
+    notifyListeners();
+  }
+
+
   void startLoading() {
     isLoading = true;
     notifyListeners();
@@ -23,6 +33,7 @@ class AuthViewModel extends ChangeNotifier {
     startLoading();
     try {
       await _authService.signIn(email, password);
+      setErrorMessage(null); // ログイン成功時、エラーメッセージを消去
       endLoading();
       return null; // 認証成功時は null を返す
     } catch (e) {
@@ -30,6 +41,7 @@ class AuthViewModel extends ChangeNotifier {
       return e.toString(); // エラーが発生した場合はエラーメッセージを返す
     }
   }
+
 
   Future<String?> signUp(String email, String pass) async {
     startLoading();

@@ -68,6 +68,21 @@ class ShiftViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void timePicker(
+    BuildContext context, 
+    DateTime selectedDate, 
+    TimeOfDay? startTime, 
+    TimeOfDay? endTime
+  ) async {
+    final TimeOfDay? timePicked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (timePicked != null) {
+      updateStartTime(_focusedDay, timePicked);
+    }
+  }
+
   Future<void> logout() async {
     await shiftRepository.logout();
   }

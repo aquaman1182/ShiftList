@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shift_app/view_models/shift_view_model.dart';
 
@@ -36,35 +35,25 @@ class ShiftSettingPage extends StatelessWidget {
               title: Text('${selectedDate.month}月${selectedDate.day}日'),
               subtitle: Text('$startTimeText - $endTimeText'),
               onTap: () async {
-                DatePicker.showTimePicker(
-                  context,
-                  showTitleActions: true,
-                  showSecondsColumn: false,
-                  onChanged: (date) {
-                    print(date);
-                  },
-                  onConfirm: (date) {
-                    shiftViewModel.updateStartTime(
-                        selectedDate, TimeOfDay(hour: date.hour, minute: date.minute));
-                  },
-                  currentTime: DateTime.now(),
-                  locale: LocaleType.jp,
+                TimeOfDay? selectedStartTime = await showTimePicker(
+                  context: context,
+                  initialTime: startTime ?? TimeOfDay.now(),
                 );
 
-                DatePicker.showTimePicker(
-                  context,
-                  showTitleActions: true,
-                  showSecondsColumn: false,
-                  onChanged: (date) {
-                    print(date);
-                  },
-                  onConfirm: (date) {
-                    shiftViewModel.updateEndTime(
-                        selectedDate, TimeOfDay(hour: date.hour, minute: date.minute));
-                  },
-                  currentTime: DateTime.now(),
-                  locale: LocaleType.jp,
+                if (selectedStartTime != null) {
+                  shiftViewModel.updateStartTime(
+                      selectedDate, selectedStartTime);
+                }
+
+                TimeOfDay? selectedEndTime = await showTimePicker(
+                  context: context,
+                  initialTime: endTime ?? TimeOfDay.now(),
                 );
+
+                if (selectedEndTime != null) {
+                  shiftViewModel.updateEndTime(
+                      selectedDate, selectedEndTime);
+                }
               },
             ),
           );
