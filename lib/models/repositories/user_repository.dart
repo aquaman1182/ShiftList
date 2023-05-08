@@ -1,20 +1,18 @@
+import 'package:shift_app/data_models/user_data/user.dart';
 import 'package:shift_app/models/db/database_manager.dart';
 
-import '../../data_models/user_data/user.dart';
 
 class UserRepository {
-  final DatabaseManager databaseManager;
+  final DatabaseManager _databaseManager;
 
-  UserRepository({required this.databaseManager});
-  Future<UserClassData> fetchUserData(String userId) async {
-    // 実際には、データベースやAPIからユーザーデータを取得するコードを書くべきです。
-    // ここではダミーデータを返します。
-    return UserClassData(
-      id: userId,
-      userName: '拓実',
-      profileImageUrl: 'https://example.com/image.jpg',
-      email: 'hal.takumi@example.com',
-      phoneNumber: '123-456-7890',
-    );
+  UserRepository({required DatabaseManager databaseManager})
+      : _databaseManager = databaseManager;
+
+  Future<UserClassData> getUser(String uid) async {
+    return await _databaseManager.getUser(uid);
+  }
+
+  Future<void> updateUser(UserClassData user, {required userId, required String name, required String phoneNumber}) async {
+    await _databaseManager.updateUser(user);
   }
 }

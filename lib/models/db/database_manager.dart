@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../data_models/user_data/user.dart';
 
 class DatabaseManager {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<Map<String, String>?> signUp(String email, String password) async {
 
     if (email.isNotEmpty && password.isNotEmpty) {
@@ -14,7 +16,7 @@ class DatabaseManager {
 
       // Userクラスのインスタンスを作成
       UserClassData newUser = UserClassData(
-        id: firebaseUser.uid,
+        userId: firebaseUser.uid,
         email: firebaseUser.email!,
         userName: '', // これらの情報は後でユーザーに入力してもらうか、デフォルト値を設定できます
         phoneNumber: '',
@@ -48,5 +50,17 @@ class DatabaseManager {
 
   Future<void> logout() async {
     await _auth.signOut();
+  }
+    Future<UserClassData> getUser(String uid) async {
+    final docSnapshot = await _firestore.collection('users').doc(uid).get();
+    if (docSnapshot.exists) {
+      return UserClassData.fromDocument(docSnapshot);
+    } else {
+      throw Exception("User not found");
+    }
+  }
+
+  Future<void> updateUser(UserClassData user) async {
+    await _firestore.collection('users').doc(user.userId).update(user.toJson());
   }
 }

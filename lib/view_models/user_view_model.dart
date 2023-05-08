@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-
-import '../data_models/user_data/user.dart';
+import 'package:shift_app/data_models/user_data/user.dart';
 import '../models/repositories/user_repository.dart';
 
 class UserViewModel extends ChangeNotifier {
-  UserClassData? _user;
+  final UserRepository _userRepository;
 
-  UserClassData? get user => _user;
+  UserViewModel({required UserRepository userRepository})
+      : _userRepository = userRepository;
 
-  final UserRepository userRepository;
+  UserClassData? _userProfile;
 
-  UserViewModel({required this.userRepository});
+  UserClassData? get userProfile => _userProfile;
 
-  Future<void> fetchUserData(String userId) async {
-    _user = await userRepository.fetchUserData(userId);
+  Future<void> fetchUserProfile(String uid) async {
+    _userProfile = await _userRepository.getUser(uid);
     notifyListeners();
   }
 }

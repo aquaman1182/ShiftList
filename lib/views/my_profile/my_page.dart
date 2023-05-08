@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shift_app/data_models/user_data/user.dart';
 import 'package:shift_app/view_models/user_view_model.dart';
-
-import '../../data_models/user_data/user.dart';
 
 class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserViewModel userViewModel = context.read<UserViewModel>();
+    final UserViewModel userViewModel = context.watch<UserViewModel>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text('My Page'),
       ),
       body: FutureBuilder(
-        future: userViewModel.fetchUserData('dummyUserId'),
+        future: userViewModel.fetchUserProfile('dummyUserId'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            UserClassData? user = userViewModel.user;
+            UserClassData? user = userViewModel.userProfile;
             if (user != null) {
               return ListView(
                 children: [
