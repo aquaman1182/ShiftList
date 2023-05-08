@@ -14,7 +14,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   final List<Widget> _pages = [
     ShiftPage(),
     MasterPage(),
-    MyProfilePage(),
+    MyPage(),
   ];
 
   @override
@@ -40,12 +40,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.calendar_month),
             label: 'ホーム',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'カレンダー',
+            icon: Icon(Icons.group),
+            label: 'マスター',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

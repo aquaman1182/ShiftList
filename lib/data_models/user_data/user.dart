@@ -5,12 +5,13 @@ part 'user.g.dart';
 
 @freezed
 class UserClassData with _$UserClassData {
-  factory UserClassData({
+  const factory UserClassData({
+    required String id,
+    required String userName,
+    required String profileImageUrl,
     required String email,
-    required String name,
-    required String uid,
+    required String phoneNumber,
   }) = _UserClassData;
-	
-  factory UserClassData.fromJson(Map<String, dynamic> json) =>
-			_$UserClassDataFromJson(json);
+
+  factory UserClassData.fromJson(Map<String, dynamic> json) => _$UserClassDataFromJson(json);
 }

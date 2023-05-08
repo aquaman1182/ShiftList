@@ -6,7 +6,7 @@ class AuthService {
   AuthService({required DatabaseManager databaseManager})
       : databaseManager = databaseManager;
 
-  Future<String?> signUp(String email, String password) async {
+  Future<Map<String, String>?> signUp(String email, String password) async {
     return await databaseManager.signUp(email, password);
   }
 

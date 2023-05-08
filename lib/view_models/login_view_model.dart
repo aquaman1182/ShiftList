@@ -13,6 +13,15 @@ class AuthViewModel extends ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
 
+  bool _obscureText = true;
+
+  bool get obscureText => _obscureText;
+
+  void togglePasswordVisibility() {
+    _obscureText = !_obscureText;
+    notifyListeners();
+  }
+
   void setErrorMessage(String? message) {
     _errorMessage = message;
     notifyListeners();
@@ -43,15 +52,25 @@ class AuthViewModel extends ChangeNotifier {
   }
 
 
-  Future<String?> signUp(String email, String pass) async {
-    startLoading();
-    try {
-      await _authService.signUp(email, pass);
-      return null;
-    } catch (e) {
-      return e.toString();
-    } finally {
-      endLoading();
+Future<String?> signUp(String email, String pass) async {
+  startLoading();
+  try {
+    final userInfo = await _authService.signUp(email, pass);
+
+    if (userInfo != null) {
+      // userInfoにはユーザーIDとメールアドレスが含まれます
+      // 必要に応じてここでその他の処理を実行してください
+      // 例: Userクラスのインスタンスを作成してプロバイダーに渡す
+
+      return null; // エラーがなければnullを返す
+    } else {
+      return "登録に失敗しました。";
     }
+  } catch (e) {
+    return e.toString();
+  } finally {
+    endLoading();
   }
+}
+
 }

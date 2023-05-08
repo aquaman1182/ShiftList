@@ -20,9 +20,11 @@ UserClassData _$UserClassDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserClassData {
+  String get id => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
+  String get profileImageUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get uid => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,12 @@ abstract class $UserClassDataCopyWith<$Res> {
           UserClassData value, $Res Function(UserClassData) then) =
       _$UserClassDataCopyWithImpl<$Res, UserClassData>;
   @useResult
-  $Res call({String email, String name, String uid});
+  $Res call(
+      {String id,
+      String userName,
+      String profileImageUrl,
+      String email,
+      String phoneNumber});
 }
 
 /// @nodoc
@@ -52,22 +59,32 @@ class _$UserClassDataCopyWithImpl<$Res, $Val extends UserClassData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? userName = null,
+    Object? profileImageUrl = null,
     Object? email = null,
-    Object? name = null,
-    Object? uid = null,
+    Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -81,7 +98,12 @@ abstract class _$$_UserClassDataCopyWith<$Res>
       __$$_UserClassDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String name, String uid});
+  $Res call(
+      {String id,
+      String userName,
+      String profileImageUrl,
+      String email,
+      String phoneNumber});
 }
 
 /// @nodoc
@@ -95,22 +117,32 @@ class __$$_UserClassDataCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
+    Object? userName = null,
+    Object? profileImageUrl = null,
     Object? email = null,
-    Object? name = null,
-    Object? uid = null,
+    Object? phoneNumber = null,
   }) {
     return _then(_$_UserClassData(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -119,22 +151,30 @@ class __$$_UserClassDataCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserClassData implements _UserClassData {
-  _$_UserClassData(
-      {required this.email, required this.name, required this.uid});
+  const _$_UserClassData(
+      {required this.id,
+      required this.userName,
+      required this.profileImageUrl,
+      required this.email,
+      required this.phoneNumber});
 
   factory _$_UserClassData.fromJson(Map<String, dynamic> json) =>
       _$$_UserClassDataFromJson(json);
 
   @override
+  final String id;
+  @override
+  final String userName;
+  @override
+  final String profileImageUrl;
+  @override
   final String email;
   @override
-  final String name;
-  @override
-  final String uid;
+  final String phoneNumber;
 
   @override
   String toString() {
-    return 'UserClassData(email: $email, name: $name, uid: $uid)';
+    return 'UserClassData(id: $id, userName: $userName, profileImageUrl: $profileImageUrl, email: $email, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -142,14 +182,20 @@ class _$_UserClassData implements _UserClassData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserClassData &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.profileImageUrl, profileImageUrl) ||
+                other.profileImageUrl == profileImageUrl) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.uid, uid) || other.uid == uid));
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, email, name, uid);
+  int get hashCode => Object.hash(
+      runtimeType, id, userName, profileImageUrl, email, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -166,20 +212,26 @@ class _$_UserClassData implements _UserClassData {
 }
 
 abstract class _UserClassData implements UserClassData {
-  factory _UserClassData(
-      {required final String email,
-      required final String name,
-      required final String uid}) = _$_UserClassData;
+  const factory _UserClassData(
+      {required final String id,
+      required final String userName,
+      required final String profileImageUrl,
+      required final String email,
+      required final String phoneNumber}) = _$_UserClassData;
 
   factory _UserClassData.fromJson(Map<String, dynamic> json) =
       _$_UserClassData.fromJson;
 
   @override
+  String get id;
+  @override
+  String get userName;
+  @override
+  String get profileImageUrl;
+  @override
   String get email;
   @override
-  String get name;
-  @override
-  String get uid;
+  String get phoneNumber;
   @override
   @JsonKey(ignore: true)
   _$$_UserClassDataCopyWith<_$_UserClassData> get copyWith =>

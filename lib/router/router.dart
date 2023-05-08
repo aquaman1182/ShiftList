@@ -68,7 +68,7 @@ GoRouter createGoRouter() {
         path: '/my_page',
         pageBuilder: (BuildContext context, GoRouterState state) =>
           FadeTransitionPage(
-            child: MyProfilePage(),
+            child: MyPage(),
           ),
       ),
     ],

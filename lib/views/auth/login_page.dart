@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthViewModel authViewModel = context.read();
+    final AuthViewModel authViewModel = context.watch();
     final emailController = TextEditingController();
     final passController = TextEditingController();
 
@@ -47,8 +47,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                     TextFormField(
                       controller: passController,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.key),
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                        icon: Icon(authViewModel.obscureText ? Icons.visibility : Icons.visibility_off),
+                          onPressed: () => authViewModel.togglePasswordVisibility(),
+                        ),
                         border: OutlineInputBorder(),
                         filled: true,
                         hintText: 'パスワード',
