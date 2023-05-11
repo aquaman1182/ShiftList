@@ -3,16 +3,22 @@ import 'package:shift_app/models/db/database_manager.dart';
 
 
 class UserRepository {
-  final DatabaseManager _databaseManager;
+  final DatabaseManager databaseManager;
 
   UserRepository({required DatabaseManager databaseManager})
-      : _databaseManager = databaseManager;
+      : databaseManager = databaseManager;
 
   Future<UserClassData> getUser(String uid) async {
-    return await _databaseManager.getUser(uid);
+    return await databaseManager.getUser(uid);
   }
 
+  Future<Map<String, String>?> signUp(String email, String password, String phoneNumber, String name) async {
+    return await databaseManager.signUp(email, password, phoneNumber, name);
+  }
+
+
+
   Future<void> updateUser(UserClassData user, {required userId, required String name, required String phoneNumber}) async {
-    await _databaseManager.updateUser(user);
+    await databaseManager.updateUser(user);
   }
 }

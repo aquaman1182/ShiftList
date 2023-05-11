@@ -12,6 +12,23 @@ class UserViewModel extends ChangeNotifier {
 
   UserClassData? get userProfile => _userProfile;
 
+Future<void> signUp(String email, String password, String phoneNumber, String name) async {
+  final userCredentials = await _userRepository.signUp(email, password, phoneNumber, name);
+  if (userCredentials != null) {
+    final newUser = UserClassData(
+      userId: userCredentials['userId']!,
+      userName: '', // Name is not set during sign up
+      email: email,
+      phoneNumber: phoneNumber,
+      profileImageUrl: "",
+    );
+    await _userRepository.updateUser(newUser, name: '', phoneNumber: '', userId: null);
+  } else {
+    throw Exception('Registration failed');
+  }
+}
+
+
   Future<void> fetchUserProfile(String uid) async {
     _userProfile = await _userRepository.getUser(uid);
     notifyListeners();

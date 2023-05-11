@@ -52,25 +52,22 @@ class AuthViewModel extends ChangeNotifier {
   }
 
 
-Future<String?> signUp(String email, String pass) async {
-  startLoading();
-  try {
-    final userInfo = await _authService.signUp(email, pass);
+  Future<String?> signUp(String email, String pass, String phone, String name) async {
+    startLoading();
+    try {
+      final userInfo = await _authService.signUp(email, pass, phone, name);
 
-    if (userInfo != null) {
-      // userInfoにはユーザーIDとメールアドレスが含まれます
-      // 必要に応じてここでその他の処理を実行してください
-      // 例: Userクラスのインスタンスを作成してプロバイダーに渡す
-
-      return null; // エラーがなければnullを返す
-    } else {
-      return "登録に失敗しました。";
+      if (userInfo != null) {
+        return null; // エラーがなければnullを返す
+      } else {
+        return "登録に失敗しました。";
+      }
+    } catch (e) {
+      return e.toString();
+    } finally {
+      endLoading();
     }
-  } catch (e) {
-    return e.toString();
-  } finally {
-    endLoading();
   }
-}
+
 
 }

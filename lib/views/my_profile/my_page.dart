@@ -6,7 +6,7 @@ import 'package:shift_app/view_models/user_view_model.dart';
 class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserViewModel userViewModel = context.watch<UserViewModel>();
+    final UserViewModel userViewModel = context.watch();
 
     return Scaffold(
       appBar: AppBar(

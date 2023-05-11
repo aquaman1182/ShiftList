@@ -5,8 +5,8 @@ import '../../data_models/user_data/user.dart';
 class DatabaseManager {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Future<Map<String, String>?> signUp(String email, String password) async {
 
+  Future<Map<String, String>?> signUp(String email, String password, String name, String phoneNumber) async {
     if (email.isNotEmpty && password.isNotEmpty) {
       final userCredential = await _auth
           .createUserWithEmailAndPassword(
@@ -17,23 +17,28 @@ class DatabaseManager {
       // Userクラスのインスタンスを作成
       UserClassData newUser = UserClassData(
         userId: firebaseUser.uid,
-        email: firebaseUser.email!,
-        userName: '', // これらの情報は後でユーザーに入力してもらうか、デフォルト値を設定できます
-        phoneNumber: '',
+        email: email,
+        userName: name,
+        phoneNumber: phoneNumber,
         profileImageUrl: '',
       );
 
       // 新規登録後にユーザー情報をデータベースに保存する処理
       await saveUserToDatabase(newUser);
 
-      return {'userId': firebaseUser.uid, 'email': firebaseUser.email!};
+      return {'userId': firebaseUser.uid, 'email': email};
     }
     return null;
   }
 
-    Future<void> saveUserToDatabase(UserClassData user) async {
-    // データベースにユーザー情報を保存する処理を実装してください
-    }
+  Future<void> saveUserToDatabase(UserClassData user) async {
+    await _firestore.collection('users').doc(user.userId).set({
+      'email': user.email,
+      'name': user.userName,
+      'phoneNumber': user.phoneNumber,
+      'profileImageUrl': user.profileImageUrl,
+    });
+  }
 
     Future<String?> signIn(String email, String password) async {
       try {
