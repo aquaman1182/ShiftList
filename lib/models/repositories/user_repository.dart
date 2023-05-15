@@ -12,9 +12,16 @@ class UserRepository {
     return await databaseManager.getUser(uid);
   }
 
-  Future<Map<String, String>?> signUp(String email, String password, String phoneNumber, String name) async {
-    return await databaseManager.signUp(email, password, phoneNumber, name);
-  }
+Future<Map<String, String>?> signUp(String email, String password, String phoneNumber, String name) async {
+  UserClassData user = UserClassData(
+    userId: '',  // この部分は適切な値に置き換えてください
+    email: email,
+    userName: name,
+    phoneNumber: phoneNumber,
+    profileImageUrl: '',  // この部分も適切な値に置き換えてください
+  );
+  return await databaseManager.signUp(user, password, phoneNumber);
+}
 
 
 

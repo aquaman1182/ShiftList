@@ -6,30 +6,21 @@ class DatabaseManager {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<Map<String, String>?> signUp(String email, String password, String name, String phoneNumber) async {
-    if (email.isNotEmpty && password.isNotEmpty) {
-      final userCredential = await _auth
-          .createUserWithEmailAndPassword(
-              email: email, password: password);
-      final firebaseUser = userCredential.user;
-      if (firebaseUser == null) return null;
+Future<Map<String, String>?> signUp(UserClassData user, String password, String phoneNumber) async {
+  if (user.email.isNotEmpty && password.isNotEmpty) {
+    final userCredential = await _auth.createUserWithEmailAndPassword(email: user.email, password: password);
+    final firebaseUser = userCredential.user;
 
-      // Userクラスのインスタンスを作成
-      UserClassData newUser = UserClassData(
-        userId: firebaseUser.uid,
-        email: email,
-        userName: name,
-        phoneNumber: phoneNumber,
-        profileImageUrl: '',
-      );
+    if (firebaseUser != null) {
+      user = user.copyWith(userId: firebaseUser.uid); // Update the uid with the one provided by Firebase Auth
+      await _firestore.collection('users').doc(firebaseUser.uid).set(user.toJson());
 
-      // 新規登録後にユーザー情報をデータベースに保存する処理
-      await saveUserToDatabase(newUser);
-
-      return {'userId': firebaseUser.uid, 'email': email};
+      return {'userId': firebaseUser.uid, 'email': firebaseUser.email!};
     }
-    return null;
   }
+  return null;
+}
+
 
   Future<void> saveUserToDatabase(UserClassData user) async {
     await _firestore.collection('users').doc(user.userId).set({
