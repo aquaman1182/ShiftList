@@ -22,7 +22,7 @@ Future<void> signUp(String email, String password, String phoneNumber, String na
       phoneNumber: phoneNumber,
       profileImageUrl: "",
     );
-    await _userRepository.updateUser(newUser, name: '', phoneNumber: '', userId: null);
+    await _userRepository.updateUser(newUser);
   } else {
     throw Exception('Registration failed');
   }

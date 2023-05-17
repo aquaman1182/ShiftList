@@ -5,6 +5,7 @@ import 'package:shift_app/views/auth/login_page.dart';
 import 'package:shift_app/views/auth/sign_up_screen.dart';
 import 'package:shift_app/views/components/bottom_navigation_bar.dart';
 import 'package:shift_app/views/master/master_page.dart';
+import 'package:shift_app/views/my_profile/edit_my_page.dart';
 import 'package:shift_app/views/my_profile/my_page.dart';
 import 'package:shift_app/views/shift/shift_add_page.dart';
 import 'package:shift_app/views/shift/shift_setting_page.dart';
@@ -70,6 +71,15 @@ GoRouter createGoRouter() {
           FadeTransitionPage(
             child: MyPage(),
           ),
+          routes: [
+            GoRoute(
+              path: 'edit',
+              pageBuilder: (BuildContext context, GoRouterState state) =>
+                FadeTransitionPage(
+                  child: EditProfilePage(),
+                ),
+            ),
+          ],
       ),
     ],
   );
